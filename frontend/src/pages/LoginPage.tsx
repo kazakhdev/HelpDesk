@@ -28,27 +28,9 @@ const LoginPage = ()=>{
         console.log('Failed:', errorInfo);
       };
 
-    const handleLogin =(formValue: {username:string, password:string})=>{
-        const {username, password} =formValue;
-        
-        // login(username, password)
-        // .then((response)=>{
-        //     navigate("/Main"); // Navigate to the profile page
-        // }).catch((error)=>{
-        //     const resMessage =
-        //     (
-        //         error.response &&
-        //         error.response.data &&
-        //         error.response.data.message) || 
-        //         error.message || error.toString();
-                
-        //         if (error.response && error.response.status ===400){
-        //           setErrorMessage("User doesn't exist. ")
-        //         }
-        //         else{
-        //           setErrorMessage(resMessage)
-        //         }
-        // })
+    const handleLogin =(formValue: {email:string, password:string})=>{
+        const {email, password} = formValue;
+        navigate("Main")
     }
     return(
     <Layout style={{
@@ -84,7 +66,7 @@ const LoginPage = ()=>{
           </Form.Item>
         )}
         <Form.Item
-          name="Email"
+          name="email"
           rules={[{required: true, message: "Please input your username"}]}
           wrapperCol={{ span: 24 }}
           labelCol={{span: 10}}
