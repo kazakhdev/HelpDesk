@@ -1,4 +1,4 @@
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Select} from 'antd';
 import { useState } from 'react';
 
 type SizeType = Parameters<typeof Form>[0]['size'];
@@ -9,11 +9,33 @@ interface InputItems {
 }
 
 interface CustomFormProps {
-  handleMethod: (values: any) => void;
+  handleMethod: (values: {
+    title: string;
+    description: string;
+    region: string;
+    contacts: string;
+    email: string;
+  }) => void;
   Inputs: InputItems[];
+  regions: string[];
+  treatments: {
+    title: string;
+    description: string;
+    region: string;
+    contacts: string;
+    email: string;
+  }[]; // Define the treatments prop type
+  editingIndex: number;
 }
 
-const CustomForm: React.FC<CustomFormProps> = ({ handleMethod, Inputs }) => {
+const regions = [
+  'Абайская', 'Акмолинская', 'Актюбинская', 'Алматинская', 'Атырауская',
+  'Восточно-Казахстанская', 'Жамбылская', 'Жетысуская', 'Западно-Казахстанская',
+  'Карагандинская', 'Костанайская', 'Кызылординская', 'Мангистауская', 'Павлодарская',
+  'Северо-Казахстанская', 'Туркестанская', 'Улытауская'
+];
+const CustomForm: React.FC<CustomFormProps> = ({ handleMethod, Inputs, regions, treatments, editingIndex }) => {
+  const initialValues = editingIndex !== -1 ? treatments[editingIndex] : undefined;
   const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
 
   const onFormLayoutChange = ({ size }: { size: SizeType }) => {
@@ -21,7 +43,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ handleMethod, Inputs }) => {
   };
 
   const onFinish = (values: any) => {
-    console.log('Form values:', values); // Log the form values to the console
+    console.log('Form values:', values); 
     handleMethod(values);
   };
 
@@ -31,21 +53,35 @@ const CustomForm: React.FC<CustomFormProps> = ({ handleMethod, Inputs }) => {
 
   const renderInputs = () => {
     return Inputs.map((object) => {
-      return (
-        <Form.Item key={object.label} name={object.label} label={object.label} wrapperCol={{ span: 24 }}>
-          <Input placeholder={object.placeholder} />
-        </Form.Item>
-      );
+      if (object.label === 'region') {
+        return (
+          <Form.Item key={object.label} name={object.label} label={object.label} wrapperCol={{ span: 24 }}>
+            <Select placeholder={object.placeholder}>
+              {/* Map through your list of regions */}
+              {regions.map((region) => (
+                <Select.Option key={region} value={region}>
+                  {region}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        );
+      } else {
+        return (
+          <Form.Item key={object.label} name={object.label} label={object.label} wrapperCol={{ span: 24 }}>
+            <Input placeholder={object.placeholder} />
+          </Form.Item>
+        );
+      }
     });
   };
-
   return (
     <Form
       name="basic"
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 10 }}
       style={{ minWidth: '40vh', minHeight: '20vh', display: 'flex', flexDirection: 'column' }}
-      initialValues={{ size: componentSize }}
+      initialValues= {initialValues}// size: componentSize 
       onValuesChange={onFormLayoutChange}
       size={componentSize as SizeType}
       onFinish={onFinish}

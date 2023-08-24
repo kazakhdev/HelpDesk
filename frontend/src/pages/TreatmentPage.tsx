@@ -17,21 +17,70 @@ const TreatmentPage = () => {
       label: 'description',
       placeholder: 'Введите описание',
     },
+    {
+      key: '3',
+      label: 'region',
+      placeholder: 'Выберите область Казахстана',
+    },
+    {
+      key: '4',
+      label: 'contacts',
+      placeholder: 'Введите контакты',
+    },
+    {
+      key: '5',
+      label: 'email',
+      placeholder: 'Введите почту',
+    },
   ];
 
-  const [open, setOpen] = useState(false);
-  const [treatments, setTreatments] = useState<{ title: string; description: string }[]>([]);
+  const regions = [
+    'Абайская', 'Акмолинская', 'Актюбинская', 'Алматинская', 'Атырауская',
+    'Восточно-Казахстанская', 'Жамбылская', 'Жетысуская', 'Западно-Казахстанская',
+    'Карагандинская', 'Костанайская', 'Кызылординская', 'Мангистауская', 'Павлодарская',
+    'Северо-Казахстанская', 'Туркестанская', 'Улытауская'
+  ];
+
+  const [open, setOpen] = useState(false); 
+  const [editingIndex, setEditingIndex] = useState(-1); // Initialize with -1 when not editing
+  const [treatments, setTreatments] = useState([
+    {
+      title: '',
+      description: '',
+      region: '', // Initialize the region property
+      contacts: '',
+      email: '',
+    },
+  ]);
   ;
-  const handlePost = (values: { title: string, description: string }) => {
-    const newTreatments = [...treatments, values]; 
-    setTreatments(newTreatments);
-
-    
-    localStorage.setItem('treatments', JSON.stringify(newTreatments));
-
-    hideModal(); 
+  const handlePost = (values: {
+    title: string;
+    description: string;
+    region: string;
+    contacts: string;
+    email: string;
+  }) => {
+    if (editingIndex !== -1) {
+      // Update existing treatment
+      const updatedTreatments = [...treatments];
+      updatedTreatments[editingIndex] = values;
+      setTreatments(updatedTreatments);
+    } else {
+      // Add new treatment
+      const newTreatments = [...treatments, values];
+      setTreatments(newTreatments);
+    }
+  
+    localStorage.setItem('treatments', JSON.stringify(treatments));
+  
+    setEditingIndex(-1); // Reset editing index
+    hideModal();
+  }; 
+  
+  const handleEdit = (index: number) => {
+    setEditingIndex(index);
+    showModal(); // Show the modal for editing
   };
-
   const showModal = () => {
     setOpen(true);
   };
@@ -41,15 +90,19 @@ const TreatmentPage = () => {
   };
 
   const renderCards = () => {
-    return treatments.map((treatment, index) => (
-      <Col xs={24} sm={24} md={16} lg={12} xl={8} key={index}>
-        <Card title={`Обращение ${index}`}>
-          <p>Название: {treatment.title}</p>
-          <p>Описание: {treatment.description}</p>
-        </Card>
-      </Col>
-    ));
-  };
+   return treatments.map((treatment, index) => (
+        <Col xs={24} sm={24} md={16} lg={12} xl={8} key={index}>
+          <Card title={`Обращение ${index}`}>
+            <p>Название: {treatment.title}</p>
+            <p>Описание: {treatment.description}</p>
+            <p>Контакты: {treatment.contacts}</p> {/* Display contacts */}
+            <p>Email: {treatment.email}</p> {/* Display email */}
+            <p>Регион: {treatment.region}</p> {/* Display the selected region */}
+            <Button onClick={() => handleEdit(index)}>Edit</Button> {/* Add Edit button */}
+          </Card>
+        </Col>
+      ));
+    };
 
   return (
     <Layout>
@@ -69,7 +122,13 @@ const TreatmentPage = () => {
         okText="Создать"
         cancelText="Отмена"
       >
-        <CustomForm handleMethod={handlePost} Inputs={inputs}></CustomForm>
+       <CustomForm
+        handleMethod={handlePost}
+        Inputs={inputs}
+        regions={regions}
+        treatments={treatments}
+        editingIndex={editingIndex}
+        />
       </Modal>
     </Layout>
   );
