@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect,useState } from "react";
 import { UserOutlined, KeyOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
+import { login } from "../services/authService";
 
 
 type SizeType = Parameters<typeof Form>[0]['size'];
@@ -30,7 +31,13 @@ const LoginPage = ()=>{
 
     const handleLogin =(formValue: {email:string, password:string})=>{
         const {email, password} = formValue;
-        navigate("Main")
+        login(email,password).then((res)=>{
+          console.log("data:",res)
+          navigate("Main")
+        }).catch((err)=>{
+          console.log("err",err)
+        })
+        
     }
     return(
     <Layout style={{
@@ -84,7 +91,10 @@ const LoginPage = ()=>{
           <Button style={{background:"#16223d",}} type="primary" htmlType="submit" size='large'  icon={<WindowsOutlined />}>Войти</Button>
         <Space />
       </Form>
+      <Space style={{display:"flex", flexDirection:"row"}}>
       <Link to={"/SignUp"}>Зарегистрироваться</Link>
+      <Link to={"/restore"}>Забыли пароль</Link>
+      </Space>
       </Card>
     </Layout>);
 }
