@@ -42,6 +42,9 @@ const TreatmentPage = () => {
   ];
 
   const [open, setOpen] = useState(false); 
+ 
+
+  const [selectedRegion, setSelectedRegion] = useState('');
   const [editingIndex, setEditingIndex] = useState(-1); // Initialize with -1 when not editing
   const [treatments, setTreatments] = useState([
     {
@@ -53,6 +56,7 @@ const TreatmentPage = () => {
     },
   ]);
   ;
+  const [filteredAndSortedTreatments, setFilteredAndSortedTreatments] = useState(treatments);
   const handlePost = (values: {
     title: string;
     description: string;
@@ -76,7 +80,13 @@ const TreatmentPage = () => {
     setEditingIndex(-1); // Reset editing index
     hideModal();
   }; 
-  
+
+  const handleFilterByRegion = (selectedRegion:string) => {
+    const filteredTreatments = treatments.filter(treatment => treatment.region === selectedRegion);
+    const sortedTreatments = filteredTreatments.sort((a, b) => a.title.localeCompare(b.title));
+    setFilteredAndSortedTreatments(sortedTreatments);
+  };
+
   const handleEdit = (index: number) => {
     setEditingIndex(index);
     showModal(); // Show the modal for editing
@@ -90,7 +100,8 @@ const TreatmentPage = () => {
   };
 
   const renderCards = () => {
-   return treatments.map((treatment, index) => (
+    const treatmentsToDisplay = filteredAndSortedTreatments.length > 0 ? filteredAndSortedTreatments : treatments;
+   return treatmentsToDisplay.map((treatment, index) => (
         <Col xs={24} sm={24} md={16} lg={12} xl={8} key={index}>
           <Card title={`Обращение ${index}`}>
             <p>Название: {treatment.title}</p>
@@ -99,6 +110,7 @@ const TreatmentPage = () => {
             <p>Email: {treatment.email}</p> {/* Display email */}
             <p>Регион: {treatment.region}</p> {/* Display the selected region */}
             <Button onClick={() => handleEdit(index)}>Edit</Button> {/* Add Edit button */}
+            <Button onClick={() => handleFilterByRegion(selectedRegion)}>Filter by Region</Button>
           </Card>
         </Col>
       ));
@@ -128,6 +140,7 @@ const TreatmentPage = () => {
         regions={regions}
         treatments={treatments}
         editingIndex={editingIndex}
+        setSelectedRegion={setSelectedRegion} 
         />
       </Modal>
     </Layout>

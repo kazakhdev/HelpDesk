@@ -1,6 +1,6 @@
 import { Form, Input, Button, Select} from 'antd';
 import { useState } from 'react';
-
+import { useSelectedRegion } from '../context/SelectedRegionContext';
 type SizeType = Parameters<typeof Form>[0]['size'];
 
 interface InputItems {
@@ -25,7 +25,9 @@ interface CustomFormProps {
     contacts: string;
     email: string;
   }[]; // Define the treatments prop type
-  editingIndex: number;
+  editingIndex: number; 
+  setSelectedRegion: React.Dispatch<React.SetStateAction<string>>;
+  
 }
 
 const regions = [
@@ -34,9 +36,10 @@ const regions = [
   'Карагандинская', 'Костанайская', 'Кызылординская', 'Мангистауская', 'Павлодарская',
   'Северо-Казахстанская', 'Туркестанская', 'Улытауская'
 ];
-const CustomForm: React.FC<CustomFormProps> = ({ handleMethod, Inputs, regions, treatments, editingIndex }) => {
+const CustomForm: React.FC<CustomFormProps> = ({ handleMethod, Inputs, regions, treatments, editingIndex}) => {
   const initialValues = editingIndex !== -1 ? treatments[editingIndex] : undefined;
   const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
+  const { selectedRegion, setSelectedRegion } = useSelectedRegion();
 
   const onFormLayoutChange = ({ size }: { size: SizeType }) => {
     setComponentSize(size);
@@ -64,6 +67,18 @@ const CustomForm: React.FC<CustomFormProps> = ({ handleMethod, Inputs, regions, 
                 </Select.Option>
               ))}
             </Select>
+            <Select
+          placeholder={object.placeholder}
+          onChange={(value) => setSelectedRegion(value)}
+          value={selectedRegion}
+        >
+          {/* Map through your list of regions */}
+          {regions.map((region) => (
+            <Select.Option key={region} value={region}>
+              {region}
+            </Select.Option>
+          ))}
+        </Select>
           </Form.Item>
         );
       } else {
