@@ -59,8 +59,14 @@ const CustomForm: React.FC<CustomFormProps> = ({ handleMethod, Inputs, regions, 
       if (object.label === 'region') {
         return (
           <Form.Item key={object.label} name={object.label} label={object.label} wrapperCol={{ span: 24 }}>
-          
-
+            <Select placeholder={object.placeholder}>
+              {/* Map through your list of regions */}
+              {regions.map((region) => (
+                <Select.Option key={region} value={region}>
+                  {region}
+                </Select.Option>
+              ))}
+            </Select>
             <Select
           placeholder={object.placeholder}
           onChange={(value) => setSelectedRegion(value)}
