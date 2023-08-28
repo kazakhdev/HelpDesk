@@ -1,6 +1,0 @@
-
-const axiosInstance =()=>{
-    
-}
-
-export {axiosInstance}
