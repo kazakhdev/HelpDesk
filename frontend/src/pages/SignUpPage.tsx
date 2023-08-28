@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect,useState } from "react";
 import { UserOutlined, KeyOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
-import AuthService from "../services/authService";
 
 
 
@@ -36,26 +35,15 @@ const SignUpPage = ()=>{
         if (password.match(secondPassword)){
             
         }
-        
-        // login(username, password)
-        // .then((response)=>{
-        //     navigate("/Main"); // Navigate to the profile page
-        // }).catch((error)=>{
-        //     const resMessage =
-        //     (
-        //         error.response &&
-        //         error.response.data &&
-        //         error.response.data.message) || 
-        //         error.message || error.toString();
-                
-        //         if (error.response && error.response.status ===400){
-        //           setErrorMessage("User doesn't exist. ")
-        //         }
-        //         else{
-        //           setErrorMessage(resMessage)
-        //         }
-        // })
+        else{
+          setErrorMessage("Пароли не совпадаются ")
+        }
     }
+    const renderError=()=>{
+      return (<Form.Item wrapperCol={{span: 10}} style={{color:"red"}}>
+      {errorMessage}
+    </Form.Item>)
+  }
     return(
     <Layout style={{
         minWidth:"100vh",
@@ -84,39 +72,57 @@ const SignUpPage = ()=>{
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        
-        {errorMessage && (
-          <Form.Item wrapperCol={{span: 16}} style={{color:"red", textAlign: "center"}}>
-            {errorMessage}
-          </Form.Item>
-        )}
         <Form.Item
           name="Email"
-          rules={[{required: true, message: "Please input your username"}]}
+          rules={[{required: true, message: "Пожалуйста введите электронную почту"}]}
           wrapperCol={{ span: 24 }}
           labelCol={{span: 10}}
         >
           <Input placeholder="Email" prefix={<UserOutlined/>} size="large"/>
         </Form.Item>
+        <Row gutter={16}> 
+        <Col span={12}>
         <Form.Item
-          name="Email"
-          rules={[{required: true, message: "Please input your username"}]}
+          name="name"
+          rules={[{required: true, message: "Пожалуйста введите имя"}]}
           wrapperCol={{ span: 24 }}
           labelCol={{span: 10}}
         >
-          <Row gutter={16}> 
-        <Col span={12}>
         <Input size="large" placeholder="Имя" prefix={<UserOutlined/>} />
+        </Form.Item>
         </Col>
         <Col span={12}>
+        <Form.Item
+          name="surname"
+          rules={[{required: true, message: "Пожалуйста введите фамилию"}]}
+          wrapperCol={{ span: 24 }}
+          labelCol={{span: 10}}
+        >
         <Input size="large" placeholder="Фамилия" prefix={<UserOutlined/>} />
+        </Form.Item>
         </Col>
     </Row>
-        </Form.Item>
+    <FormItem
+          name="middleName"
+          rules={[
+            {required:true, message:"Пожалуйста введите отчество" }]}
+          wrapperCol={{ span: 24 }}
+          labelCol={{span: 2}}
+        >
+          <Input.Password size="large" placeholder="" prefix={<KeyOutlined/>}/>
+        </FormItem>
         
         <FormItem
           name="password"
-          rules={[{required:true, message:"Please input passwod" }]}
+          rules={[
+            { required: true, message: "Пожалуйста введите пароль" },
+            { min: 8, message: "Пароль должен содержать минимум 8 символов" },
+            {
+              pattern: /^(?=.*[A-Z])(?=.*\d)/,
+              message: "Пароль должен содержать хотя бы одну заглавную букву и одну цифру",
+            },
+          ]}
+          validateTrigger="blur" // Trigger validation on blur
           wrapperCol={{ span: 24 }}
           labelCol={{span: 2}}
         >
@@ -124,7 +130,8 @@ const SignUpPage = ()=>{
         </FormItem>
         <FormItem
           name="secondPassword"
-          rules={[{required:true, message:"Please input passwod" }]}
+          rules={[
+            {required:true, message:"Пожалуйста подтвердите пароль" }]}
           wrapperCol={{ span: 24 }}
           labelCol={{span: 2}}
         >
