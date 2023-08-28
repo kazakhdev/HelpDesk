@@ -1,4 +1,4 @@
-import { UploadOutlined, FileDoneOutlined, LogoutOutlined } from '@ant-design/icons';
+import { UploadOutlined, FileDoneOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 
 export interface MenuItem {
   key: string;
@@ -23,11 +23,19 @@ export const menuItems:MenuItem[] = [
     link: "/Treatment"
   },
   {
-    key: "3",
+    key:"3",
+    icon:<UserOutlined/>,
+    label: "Профиль",
+    link: "/Profile"
+  },
+  {
+    key: "4",
     icon: <LogoutOutlined/>,
     label: "Выход",
     link: "/"
   }
+  ,
+  
   
 ];
 

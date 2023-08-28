@@ -1,6 +1,5 @@
 import { Button, Card, Form, Input, Layout, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import logo from '../../../assets/img/aitu_logo.png'
 import {WindowsOutlined} from '@ant-design/icons'
 // import { login } from "../../../services/authServies";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +12,6 @@ import { login } from "../services/authService";
 type SizeType = Parameters<typeof Form>[0]['size'];
 const LoginPage = ()=>{
   const [errorMessage, setErrorMessage] = useState("");
-  
   const [componentSize, setComponentSize] = useState<SizeType | 'default'>('default');
 
   const onFormLayoutChange = ({ size }: { size: SizeType }) => {
@@ -32,10 +30,22 @@ const LoginPage = ()=>{
     const handleLogin =(formValue: {email:string, password:string})=>{
         const {email, password} = formValue;
         login(email,password).then((res)=>{
-          console.log("data:",res)
           navigate("Main")
-        }).catch((err)=>{
-          console.log("err",err)
+        }).catch((error)=>{
+          const resMessage =
+            (
+                error.response &&
+                error.response.data &&
+                error.response.data.message) || 
+                error.message || error.toString();
+                
+                if (error.response && error.response.status ===400){
+                  setErrorMessage("Неверный логин или пароль")
+                }
+                else{
+                  setErrorMessage(resMessage)
+                }
+
         })
         
     }
@@ -67,11 +77,6 @@ const LoginPage = ()=>{
         autoComplete="off"
       >
         
-        {errorMessage && (
-          <Form.Item wrapperCol={{span: 16}} style={{color:"red", textAlign: "center"}}>
-            {errorMessage}
-          </Form.Item>
-        )}
         <Form.Item
           name="email"
           rules={[{required: true, message: "Please input your username"}]}
@@ -87,9 +92,17 @@ const LoginPage = ()=>{
           labelCol={{span: 2}}
         >
           <Input.Password size="large" placeholder="Password" prefix={<KeyOutlined/>}/>
+          
         </FormItem>
+        {errorMessage && (
+          <Form.Item wrapperCol={{span: 16}} style={{color:"red", textAlign: "center"}}>
+            {errorMessage}
+          </Form.Item>
+        )}
           <Button style={{background:"#16223d",}} type="primary" htmlType="submit" size='large'  icon={<WindowsOutlined />}>Войти</Button>
+        
         <Space />
+        
       </Form>
       <Space style={{display:"flex", flexDirection:"row"}}>
       <Link to={"/SignUp"}>Зарегистрироваться</Link>
