@@ -1,4 +1,4 @@
-import { Layout, Card, Button, Typography, Modal, Row, Col } from 'antd';
+import { Layout, Card, Button, Typography, Modal, Form, Divider, Space, Row, Col } from 'antd';
 import { useState } from 'react';
 import { InputItems } from '../common/InputItems';
 import { CustomForm } from '../components/CustomForm';
@@ -55,7 +55,7 @@ const TreatmentPage = () => {
       email: '',
     },
   ]);
-
+  ;
   const [filteredAndSortedTreatments, setFilteredAndSortedTreatments] = useState(treatments);
   const handlePost = (values: {
     title: string;
@@ -110,7 +110,7 @@ const TreatmentPage = () => {
             <p>Email: {treatment.email}</p> {/* Display email */}
             <p>Регион: {treatment.region}</p> {/* Display the selected region */}
             <Button onClick={() => handleEdit(index)}>Edit</Button> {/* Add Edit button */}
-         
+            <Button onClick={() => handleFilterByRegion(selectedRegion)}>Filter by Region</Button>
           </Card>
         </Col>
       ));
@@ -121,7 +121,6 @@ const TreatmentPage = () => {
       <Card>
         <Title>Создать обращение</Title>
         <Button onClick={showModal}>Создать Обращение</Button>
-        <Button onClick={() => handleFilterByRegion(selectedRegion)}>Filter by Region</Button>
       </Card>
       <Card>
         <Title level={2}>Список ваших обращений</Title>
@@ -129,7 +128,7 @@ const TreatmentPage = () => {
       </Card>
       <Modal
         title="Обращение"
-        open={open}
+        visible={open}
         onOk={hideModal}
         onCancel={hideModal}
         okText="Создать"
