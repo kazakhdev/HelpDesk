@@ -9,7 +9,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config) => {
   const sessionData = localStorage.getItem("user"); // Use getItem here
   const token = sessionData ? JSON.parse(sessionData).data.token : null;
-  console.log("Token: ", JSON.parse(sessionData!).data.token);
   config.headers.Authorization = `Bearer ${token}`;
   config.headers["Cache-Control"] = "no-cache";
 

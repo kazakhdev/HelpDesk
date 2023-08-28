@@ -1,4 +1,5 @@
 import { UploadOutlined, FileDoneOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { logOut } from '../services/authService';
 
 export interface MenuItem {
   key: string;
@@ -6,6 +7,7 @@ export interface MenuItem {
   label: React.ReactNode;
   link: string;
   role?: string;
+  // onClick?: ()=>void;
   children?: MenuItem[];
 }
 
@@ -32,10 +34,10 @@ export const menuItems:MenuItem[] = [
     key: "4",
     icon: <LogoutOutlined/>,
     label: "Выход",
-    link: "/"
+    link: "/",
+    // onClick: ()=> {
+    //   logOut()
+    // }
   }
-  ,
-  
-  
 ];
 
