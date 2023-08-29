@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect,useState } from "react";
 import { UserOutlined, KeyOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
-import { login } from "../services/authService";
+import {login} from "../services/authService";
 
 
 type SizeType = Parameters<typeof Form>[0]['size'];

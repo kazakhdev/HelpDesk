@@ -8,6 +8,7 @@ import useLocalStorage from './hooks/useLocalStorage';
 import { MainPage } from './pages/MainPage';
 import { MainContent } from './components/MainContent';
 import { TreatmentPage } from './pages/TreatmentPage';
+import AdministrationPage from './pages/AdministrationPage'
 import SelectedRegionProvider from './components/SelectedRegionProvider';
 // import { getUser } from './services/authService';
 import { ProfilePage } from './pages/ProfilePage';
@@ -30,6 +31,7 @@ function App() {
       <Route path='/Main' element ={<MainContent><MainPage/></MainContent>}/>
       <Route path='/Treatment' element={<MainContent><TreatmentPage/></MainContent>}/>
       <Route path='/Profile' element={<MainContent><ProfilePage/></MainContent>}/>
+      <Route path='/Administration' element={<MainContent><AdministrationPage/></MainContent>}/>
     </Routes>
     </Layout>
     </SelectedRegionProvider>

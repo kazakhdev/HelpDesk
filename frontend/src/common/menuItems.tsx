@@ -27,14 +27,26 @@ export const menuItems:MenuItem[] = [
     icon:<UserOutlined/>,
     label: "Профиль",
     link: "/Profile"
-  },
+  },  
   {
     key: "4",
+    icon: <FileDoneOutlined />,
+    label: "Администрирование",
+    link: "/Administration"
+  },
+  {
+    key:"5",
+    icon:<UserOutlined/>,
+    label: "Организация",
+    link: "/Organization"
+  },
+  {
+    key: "6",
     icon: <LogoutOutlined/>,
     label: "Выход",
     link: "/"
   }
-  ,
+  
   
   
 ];
