@@ -12,6 +12,9 @@ import AdministrationPage from './pages/AdministrationPage'
 import SelectedRegionProvider from './components/SelectedRegionProvider';
 // import { getUser } from './services/authService';
 import { ProfilePage } from './pages/ProfilePage';
+import { ProtectedRoute } from './Route/ProtectedRouter';
+import { Page } from './pages/Page';
+import { PasswordRecoveryPage } from './pages/PasswordRecoveryPage';
 
 function App() {
   // useEffect(()=>{
@@ -27,11 +30,15 @@ function App() {
     <Layout style={{minHeight:"100vh"}}>
     <Routes>
       <Route  path='/' element={<LoginPage />}/>
+      <Route path='Recovery' element={<PasswordRecoveryPage/>}/>
+      <Route element={<ProtectedRoute/> }>
       <Route path='/SignUp' element={<SignUpPage/>}/>
       <Route path='/Main' element ={<MainContent><MainPage/></MainContent>}/>
       <Route path='/Treatment' element={<MainContent><TreatmentPage/></MainContent>}/>
       <Route path='/Profile' element={<MainContent><ProfilePage/></MainContent>}/>
       <Route path='/Administration' element={<MainContent><AdministrationPage/></MainContent>}/>
+      <Route path='/unauthorized' element={<Page/>}/>
+      </Route>
     </Routes>
     </Layout>
     </SelectedRegionProvider>

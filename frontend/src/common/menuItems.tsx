@@ -7,11 +7,11 @@ export interface MenuItem {
   label: React.ReactNode;
   link: string;
   role?: string;
-  // onClick?: ()=>void;
+  onClick?: () => void;
   children?: MenuItem[];
 }
 
-export const menuItems:MenuItem[] = [
+export const menuItems: MenuItem[] = [
   {
     key: "1",
     icon: <UploadOutlined />,
@@ -25,8 +25,8 @@ export const menuItems:MenuItem[] = [
     link: "/Treatment"
   },
   {
-    key:"3",
-    icon:<UserOutlined/>,
+    key: "3",
+    icon: <UserOutlined />,
     label: "Профиль",
     link: "/Profile"
   },  
@@ -47,12 +47,8 @@ export const menuItems:MenuItem[] = [
     icon: <LogoutOutlined/>,
     label: "Выход",
     link: "/",
-    // onClick: ()=> {
-    //   logOut()
-    // }
+    onClick: () => {
+      console.log("Miras"); // Change this line
+    }
   }
-  
-  
-  
 ];
-
