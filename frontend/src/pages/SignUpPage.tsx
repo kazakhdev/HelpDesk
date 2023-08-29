@@ -1,6 +1,5 @@
 import { Button, Card, Form, Input, Layout, Space, Row, Col} from "antd";
 import FormItem from "antd/es/form/FormItem";
-import logo from '../../../assets/img/aitu_logo.png'
 import {WindowsOutlined} from '@ant-design/icons'
 // import { login } from "../../../services/authServies";
 import { useNavigate } from "react-router-dom";
