@@ -3,7 +3,7 @@ import { Avatar, Card, Row, Col, Typography, Space } from "antd";
 import Layout from "antd/es/layout/layout";
 import { useEffect, useState } from "react";
 import { BackButton } from "../components/BackButton";
-import { getUser } from "../services/authService";
+import { getCurrentUser, getUser } from "../services/authService";
 import { IUser } from "../common/IUser";
 
 const { Title, Text } = Typography;
@@ -12,7 +12,7 @@ const ProfilePage = () => {
   const [user,setUser] =useState<IUser>()
   useEffect(()=>{
       const fetchUserDate = async()=>{
-          const res =await getUser();
+          const res =await getCurrentUser();
           setUser(res)
       }
       fetchUserDate();

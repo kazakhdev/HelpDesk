@@ -26,7 +26,6 @@ export const login = async (login: string, password: string) => {
     }
   };
 export const logOut=()=>{
-    localStorage.removeItem("user");
     localStorage.clear()
     
 }
@@ -48,9 +47,17 @@ export const register =async(email:string,firstName:string, secondName: string,m
 //         return res.data;
 //     })
 // }
-export const getUser = async () => {
+export const getUser = async()=>{
+  if (localStorage.getItem("userData")){
+    return JSON.stringify(localStorage.getItem("userData"));
+  }
+}
+export const getCurrentUser = async () => {
      try
      {
+       if (localStorage.getItem("userData")){
+    return JSON.stringify(localStorage.getItem("userData"));
+  }
       const res = await axiosInstance.get(API_URL + "/api/Account");
       if (res.status === 200) {
         localStorage.setItem("userData", JSON.stringify(res.data.data));
