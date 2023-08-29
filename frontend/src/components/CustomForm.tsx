@@ -10,22 +10,38 @@ interface InputItems {
 
 interface CustomFormProps {
   handleMethod: (values: {
-    title: string;
-    description: string;
-    region: string;
-    contacts: string;
+    id: string;
+    createdDate: string;
+    name: string;
+    bin: string;
+    address: string;
+    headFirstName: string;
+    headLastName: string;
+    headMiddleName: string;
+    phoneNumber: string;
     email: string;
+    city: string;
+    projectId: string;
+    projects: string[];
   }) => void;
   Inputs: InputItems[];
   regions: string[];
   treatments: {
-    title: string;
-    description: string;
-    region: string;
-    contacts: string;
+    id: string;
+    createdDate: string;
+    name: string;
+    bin: string;
+    address: string;
+    headFirstName: string;
+    headLastName: string;
+    headMiddleName: string;
+    phoneNumber: string;
     email: string;
-  }[]; // Define the treatments prop type
-  editingIndex: number; 
+    city: string;
+    projectId: string;
+    projects: string[];
+  }[];
+  editingIndex: number;
   setSelectedRegion: React.Dispatch<React.SetStateAction<string>>;
   
 }
@@ -46,8 +62,22 @@ const CustomForm: React.FC<CustomFormProps> = ({ handleMethod, Inputs, regions, 
   };
 
   const onFinish = (values: any) => {
-    console.log('Form values:', values); 
-    handleMethod(values);
+    const formattedValues = {
+      id: '',
+      createdDate: new Date().toISOString(),
+      name: values.title,
+      bin: values.bin, // Add bin value
+      address: values.address, // Add address value
+      headFirstName: values.headFirstName, // Add headFirstName value
+      headLastName: values.headLastName, // Add headLastName value
+      headMiddleName: values.headMiddleName, // Add headMiddleName value
+      phoneNumber: values.contacts,
+      email: values.email,
+      city: values.city, // Add city value
+      projectId: values.projectId, // Add projectId value
+      projects: values.projects, // Add projects value
+    };
+    handleMethod(formattedValues);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -59,19 +89,24 @@ const CustomForm: React.FC<CustomFormProps> = ({ handleMethod, Inputs, regions, 
       if (object.label === 'region') {
         return (
           <Form.Item key={object.label} name={object.label} label={object.label} wrapperCol={{ span: 24 }}>
-         
             <Select
-          placeholder={object.placeholder}
-          onChange={(value) => setSelectedRegion(value)}
-          value={selectedRegion}
-        >
-          {/* Map through your list of regions */}
-          {regions.map((region) => (
-            <Select.Option key={region} value={region}>
-              {region}
-            </Select.Option>
-          ))}
-        </Select>
+              placeholder={object.placeholder}
+              onChange={(value) => setSelectedRegion(value)}
+              value={selectedRegion}
+            >
+              {regions.map((region) => (
+                <Select.Option key={region} value={region}>
+                  {region}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        );
+      } else if (object.label === 'bin' || object.label === 'address' || object.label === 'headFirstName'  ) {
+        // Render additional fields
+        return (
+          <Form.Item key={object.label} name={object.label} label={object.label} wrapperCol={{ span: 24 }}>
+            <Input placeholder={object.placeholder} />
           </Form.Item>
         );
       } else {
