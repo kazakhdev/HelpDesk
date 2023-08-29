@@ -1,10 +1,11 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Card, Row, Col, Typography, Space } from "antd";
+import { Avatar, Card, Row, Col, Typography, Space, Button } from "antd";
 import Layout from "antd/es/layout/layout";
 import { useEffect, useState } from "react";
 import { BackButton } from "../components/BackButton";
 import { getCurrentUser, getUser } from "../services/authService";
 import { IUser } from "../common/IUser";
+import { createOrganization } from "../services/organizationService";
 
 const { Title, Text } = Typography;
 
@@ -18,6 +19,9 @@ const ProfilePage = () => {
       fetchUserDate();
   },[])
 
+  const handleCreate =()=>{
+    createOrganization("1","Miras","3232423232","Sauran 14","First","Bank","Middle","87055179009","mrametist","Astana","2",["Miras", "Dias"])
+  }
   return (
     <Layout>
         <Title level={2}>Профиль</Title>
@@ -48,6 +52,7 @@ const ProfilePage = () => {
           </Col>
         </Row>
       </Card>
+      <Button onClick={handleCreate}>Создать организацию</Button>
     </Layout>
   );
 };

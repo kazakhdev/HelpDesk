@@ -108,7 +108,7 @@ const LoginPage = ()=>{
       </Form>
       <Space style={{display:"flex", flexDirection:"row"}}>
       <Link to={"/SignUp"}>Зарегистрироваться</Link>
-      <Link to={"/restore"}>Забыли пароль</Link>
+      <Link to={"/Recovery"}>Забыли пароль</Link>
       </Space>
       </Card>
     </Layout>);

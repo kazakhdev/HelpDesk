@@ -52,13 +52,19 @@ export const getUser = async()=>{
     return JSON.stringify(localStorage.getItem("userData"));
   }
 }
+export const recoveryPassword =async(login:string)=>{
+const body ={login:login}
+await axiosInstance.patch(`/api/Account`,body).then((res)=>{
+  console.log("respone in recovery: ", res)
+})
+}
 export const getCurrentUser = async () => {
      try
      {
        if (localStorage.getItem("userData")){
     return JSON.stringify(localStorage.getItem("userData"));
   }
-      const res = await axiosInstance.get(API_URL + "/api/Account");
+      const res = await axiosInstance.get("/api/Account");
       if (res.status === 200) {
         localStorage.setItem("userData", JSON.stringify(res.data.data));
       }
