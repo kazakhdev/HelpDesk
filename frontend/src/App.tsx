@@ -30,7 +30,7 @@ function App() {
     <Layout style={{minHeight:"100vh"}}>
     <Routes>
       <Route  path='/' element={<LoginPage />}/>
-      <Route path='Recovery' element={<PasswordRecoveryPage/>}/>
+      <Route path='/Recovery' element={<PasswordRecoveryPage/>}/>
       <Route element={<ProtectedRoute/> }>
       <Route path='/SignUp' element={<SignUpPage/>}/>
       <Route path='/Main' element ={<MainContent><MainPage/></MainContent>}/>

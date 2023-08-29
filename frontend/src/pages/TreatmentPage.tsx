@@ -1,11 +1,38 @@
-import { Layout, Card, Button, Typography, Modal, Form, Divider, Space, Row, Col } from 'antd';
-import { useState } from 'react';
+import { Layout, Card, Button, Typography, Modal, Form, Divider, Space, Row, Col, Table } from 'antd';
+import { useEffect, useState } from 'react';
 import { InputItems } from '../common/InputItems';
 import { CustomForm } from '../components/CustomForm';
 
 const { Title } = Typography;
 
 const TreatmentPage = () => {
+  const columns =[
+    {
+      title: 'Название',
+      dataIndex: 'title',
+      key: 'title',
+    },
+    {
+      title: 'Описание',
+      dataIndex: 'description',
+      key: 'description',
+    },
+    {
+      title: 'Регион',
+      dataIndex: 'region',
+      key: 'region',
+    },
+    {
+      title: 'Контакты',
+      dataIndex: 'contacts',
+      key: 'contacts',
+    },
+    {
+      title: 'Почта',
+      dataIndex: 'email',
+      key: 'email',
+    }
+  ]
   const inputs: InputItems[] = [
     {
       key: '1',
@@ -40,14 +67,24 @@ const TreatmentPage = () => {
     'Карагандинская', 'Костанайская', 'Кызылординская', 'Мангистауская', 'Павлодарская',
     'Северо-Казахстанская', 'Туркестанская', 'Улытауская'
   ];
-
+  // useEffect(()=>{
+  //   const fetchAppeals = async()=>{
+  //     const res =localStorage.getItem("treatments")
+  //     if (res) {
+  //       const parsedTreatments = JSON.parse(res);
+  //       setTreatments(parsedTreatments);
+  //     }
+  //     fetchAppeals();
+  //   }
+  // },[])
   const [open, setOpen] = useState(false); 
  
-
+  // const [appeals, setAppeals] =useState<IAppeals>();
   const [selectedRegion, setSelectedRegion] = useState('');
   const [editingIndex, setEditingIndex] = useState(-1); // Initialize with -1 when not editing
   const [treatments, setTreatments] = useState([
     {
+      
       title: '',
       description: '',
       region: '', // Initialize the region property
@@ -123,12 +160,15 @@ const TreatmentPage = () => {
         <Button onClick={showModal}>Создать Обращение</Button>
       </Card>
       <Card>
-        <Title level={2}>Список ваших обращений</Title>
-        <Row gutter={[16, 16]}>{renderCards()}</Row>
+        {/* <Title level={2}>Список ваших обращений</Title>
+        <Row gutter={[16, 16]}>{renderCards()}</Row> */}
+        <Table columns={columns} dataSource={treatments}>
+
+        </Table>
       </Card>
       <Modal
         title="Обращение"
-        visible={open}
+        open={open}
         onOk={hideModal}
         onCancel={hideModal}
         okText="Создать"
