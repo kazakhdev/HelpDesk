@@ -1,5 +1,6 @@
 import { UploadOutlined, FileDoneOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { logOut } from '../services/authService';
+import { Empty } from 'antd';
 
 export interface MenuItem {
   key: string;
@@ -32,19 +33,19 @@ export const menuItems:MenuItem[] = [
   },  
   {
     key: "4",
-    icon: <FileDoneOutlined />,
+    icon: <Empty />,
     label: "Администрирование",
     link: "/Administration"
   },
   {
     key:"5",
-    icon:<UserOutlined/>,
+    icon:<Empty/>,
     label: "Организация",
     link: "/Organization"
   },
   {
     key: "6",
-    icon: <LogoutOutlined/>,
+    icon: <Empty/>,
     label: "Выход",
     link: "/",
     // onClick: ()=> {

@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Layout, Card, Button, Typography, Modal, Form, Divider } from 'antd';
-import type { PaginationProps } from 'antd';
-import { Pagination } from 'antd';
 
 const { Title } = Typography;
 
-const AdministrationPage = () => {
+const OrganizationPage = () => {
   const [organizationModalVisible, setOrganizationModalVisible] = useState(false);
   const [roleModalVisible, setRoleModalVisible] = useState(false);
 
@@ -24,26 +22,15 @@ const AdministrationPage = () => {
   const hideRoleModal = () => {
     setRoleModalVisible(false);
   };
-  const itemRender: PaginationProps['itemRender'] = (_, type, originalElement) => {
-    if (type === 'prev') {
-      return <a>Previous</a>;
-    }
-    if (type === 'next') {
-      return <a>Next</a>;
-    }
-    return originalElement;
-  };
 
   return (
     <Layout>
-    
       <Card>
-        <Title>Управление</Title>
+        <Title>Организация</Title>
       </Card>
       <Card>
-        <Title level={2}>Создание организации и роли</Title>
-        <Button onClick={showOrganizationModal}>Создать организацию</Button>
-        <Button onClick={showRoleModal}>Создать роль</Button>
+        <Title level={2}>Список Организаций</Title>
+
       </Card>
       <Modal
         title="Создание организации"
@@ -61,9 +48,8 @@ const AdministrationPage = () => {
       >
         {/* Форма для создания роли */}
       </Modal>
-      <Pagination total={500} itemRender={itemRender} />
     </Layout>
   );
 };
 
-export default AdministrationPage;
+export default OrganizationPage;

@@ -12,6 +12,7 @@ import AdministrationPage from './pages/AdministrationPage'
 import SelectedRegionProvider from './components/SelectedRegionProvider';
 // import { getUser } from './services/authService';
 import { ProfilePage } from './pages/ProfilePage';
+import OrganizationPage from './pages/OrganizationPage';
 
 function App() {
   // useEffect(()=>{
@@ -32,6 +33,7 @@ function App() {
       <Route path='/Treatment' element={<MainContent><TreatmentPage/></MainContent>}/>
       <Route path='/Profile' element={<MainContent><ProfilePage/></MainContent>}/>
       <Route path='/Administration' element={<MainContent><AdministrationPage/></MainContent>}/>
+      <Route path='/Organization' element={<MainContent><OrganizationPage/></MainContent>}/>
     </Routes>
     </Layout>
     </SelectedRegionProvider>
