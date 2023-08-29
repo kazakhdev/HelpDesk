@@ -1,4 +1,5 @@
 import { UploadOutlined, FileDoneOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { logOut } from '../services/authService';
 
 export interface MenuItem {
   key: string;
@@ -6,10 +7,11 @@ export interface MenuItem {
   label: React.ReactNode;
   link: string;
   role?: string;
+  onClick?: () => void;
   children?: MenuItem[];
 }
 
-export const menuItems:MenuItem[] = [
+export const menuItems: MenuItem[] = [
   {
     key: "1",
     icon: <UploadOutlined />,
@@ -23,8 +25,8 @@ export const menuItems:MenuItem[] = [
     link: "/Treatment"
   },
   {
-    key:"3",
-    icon:<UserOutlined/>,
+    key: "3",
+    icon: <UserOutlined />,
     label: "Профиль",
     link: "/Profile"
   },  
@@ -44,10 +46,9 @@ export const menuItems:MenuItem[] = [
     key: "6",
     icon: <LogoutOutlined/>,
     label: "Выход",
-    link: "/"
+    link: "/",
+    onClick: () => {
+      console.log("Miras"); // Change this line
+    }
   }
-  
-  
-  
 ];
-
