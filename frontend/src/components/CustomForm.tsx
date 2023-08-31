@@ -9,7 +9,7 @@ interface InputItems {
 }
 
 interface CustomFormProps {
-  handleMethod: (values: {
+  handleMethod: (values: { 
     id: string;
     createdDate: string;
     name: string;
@@ -27,19 +27,19 @@ interface CustomFormProps {
   Inputs: InputItems[];
   regions: string[];
   treatments: {
-    id: string;
-    createdDate: string;
-    name: string;
-    bin: string;
-    address: string;
-    headFirstName: string;
-    headLastName: string;
-    headMiddleName: string;
-    phoneNumber: string;
-    email: string;
-    city: string;
-    projectId: string;
-    projects: string[];
+  id: string;
+  createdDate: string;
+  name: string;
+  bin: string;
+  address: string;
+  headFirstName: string;
+  headLastName: string;
+  headMiddleName: string;
+  phoneNumber: string;
+  email: string;
+  city: string;
+  projectId: string;
+  projects: string[];
   }[];
   editingIndex: number;
   setSelectedRegion: React.Dispatch<React.SetStateAction<string>>;
@@ -63,6 +63,7 @@ const CustomForm: React.FC<CustomFormProps> = ({ handleMethod, Inputs, regions, 
 
   const onFinish = (values: any) => {
     const formattedValues = {
+     
       id: '',
       createdDate: new Date().toISOString(),
       name: values.title,
