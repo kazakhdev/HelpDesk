@@ -1,4 +1,4 @@
-import { UploadOutlined, FileDoneOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { UploadOutlined, FileDoneOutlined, LogoutOutlined, UserOutlined, GlobalOutlined } from '@ant-design/icons';
 import { logOut } from '../services/authService';
 import { Empty } from 'antd';
 
@@ -20,6 +20,12 @@ export const menuItems: MenuItem[] = [
     link: "/Main"
   },
   {
+    key:"7",
+    icon:<UserOutlined/>,
+    label: "Создать Обращение",
+    link: "/CreateTreatment"
+  },
+  {
     key: "2",
     icon: <FileDoneOutlined />,
     label: "Обращения",
@@ -33,7 +39,7 @@ export const menuItems: MenuItem[] = [
   },  
   {
     key: "4",
-    icon: <Empty />,
+    icon: <GlobalOutlined />,
     label: "Администрирование",
     link: "/Administration"
   },
@@ -42,12 +48,6 @@ export const menuItems: MenuItem[] = [
     icon:<Empty/>,
     label: "Организация",
     link: "/Organization"
-  },
-  {
-    key:"6",
-    icon:"",
-    label:"Проекты",
-    link: "/Projects"
   },
   {
     key: "6",
