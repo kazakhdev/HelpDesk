@@ -6,7 +6,7 @@ const API_URL ="https://localhost:7001";
 export const login = async (login: string, password: string) => {
     const body = { login, password };
     try {
-      const response = await axios.post(API_URL + '/api/Account', body);
+       const response = await axios.post(API_URL + '/api/Account', body);
       if (response.data.code==="SUCCESS") {
         const userData = {
           isSuccessed: response.data.isSuccessed,
@@ -19,6 +19,7 @@ export const login = async (login: string, password: string) => {
           exception: response.data.exception,
         };
         localStorage.setItem("user", JSON.stringify(userData));
+        return response.data.data.isSuccessed;
       }
     } catch (error) {
       console.log("ERROR: ", error);

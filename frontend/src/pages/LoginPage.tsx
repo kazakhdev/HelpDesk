@@ -30,7 +30,7 @@ const LoginPage = ()=>{
 
     const handleLogin =(formValue: {email:string, password:string})=>{
         const {email, password} = formValue;
-        login(email,password).then((res)=>{
+        const res =login(email,password).then((res)=>{
           getUser();
           navigate("Main")
         }).catch((error)=>{

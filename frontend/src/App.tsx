@@ -12,13 +12,10 @@ import AdministrationPage from './pages/AdministrationPage'
 import SelectedRegionProvider from './components/SelectedRegionProvider';
 // import { getUser } from './services/authService';
 import { ProfilePage } from './pages/ProfilePage';
-<<<<<<< HEAD
-import OrganizationPage from './pages/OrganizationPage';
-=======
 import { ProtectedRoute } from './Route/ProtectedRouter';
 import { Page } from './pages/Page';
 import { PasswordRecoveryPage } from './pages/PasswordRecoveryPage';
->>>>>>> 3110309ad84241d6075a6d26a4cb9baf12ff8aad
+import OrganizationPage from './pages/OrganizationPage';
 
 function App() {
   // useEffect(()=>{
@@ -39,14 +36,11 @@ function App() {
       <Route path='/SignUp' element={<SignUpPage/>}/>
       <Route path='/Main' element ={<MainContent><MainPage/></MainContent>}/>
       <Route path='/Treatment' element={<MainContent><TreatmentPage/></MainContent>}/>
+      <Route path='/Organization' element={<MainContent><OrganizationPage/></MainContent>}/>
       <Route path='/Profile' element={<MainContent><ProfilePage/></MainContent>}/>
       <Route path='/Administration' element={<MainContent><AdministrationPage/></MainContent>}/>
-<<<<<<< HEAD
-      <Route path='/Organization' element={<MainContent><OrganizationPage/></MainContent>}/>
-=======
       <Route path='/unauthorized' element={<Page/>}/>
       </Route>
->>>>>>> 3110309ad84241d6075a6d26a4cb9baf12ff8aad
     </Routes>
     </Layout>
     </SelectedRegionProvider>
