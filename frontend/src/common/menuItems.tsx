@@ -44,6 +44,12 @@ export const menuItems: MenuItem[] = [
     link: "/Organization"
   },
   {
+    key:"6",
+    icon:"",
+    label:"Проекты",
+    link: "/Projects"
+  },
+  {
     key: "6",
     icon: <Empty/>,
     label: "Выход",
