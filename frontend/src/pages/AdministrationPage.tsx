@@ -1,67 +1,115 @@
-import React, { useState } from 'react';
-import { Layout, Card, Button, Typography, Modal, Form, Divider } from 'antd';
-import type { PaginationProps } from 'antd';
-import { Pagination } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Layout, Card, Table, Form, Input, Select, Button, Typography } from 'antd';
+import { get, post, put, del } from '../services/api';
 
 const { Title } = Typography;
+const { Option } = Select;
 
 const AdministrationPage = () => {
-  const [organizationModalVisible, setOrganizationModalVisible] = useState(false);
-  const [roleModalVisible, setRoleModalVisible] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
+  const [projects, setProjects] = useState([]);
 
-  const showOrganizationModal = () => {
-    setOrganizationModalVisible(true);
-  };
-
-  const hideOrganizationModal = () => {
-    setOrganizationModalVisible(false);
-  };
-
-  const showRoleModal = () => {
-    setRoleModalVisible(true);
-  };
-
-  const hideRoleModal = () => {
-    setRoleModalVisible(false);
-  };
-  const itemRender: PaginationProps['itemRender'] = (_, type, originalElement) => {
-    if (type === 'prev') {
-      return <a>Previous</a>;
+  const fetchUsers = async () => {
+    try {
+      const response = await get('api/Users'); // Adjust the API endpoint
+      setUsers(response.data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
     }
-    if (type === 'next') {
-      return <a>Next</a>;
+  };
+
+  const fetchRoles = async () => {
+    try {
+      const response = await get('api/Roles'); // Adjust the API endpoint
+      setRoles(response.data);
+    } catch (error) {
+      console.error('Error fetching roles:', error);
     }
-    return originalElement;
+  };
+
+  const fetchOrganizations = async () => {
+    try {
+      const response = await get('api/Organizations'); // Adjust the API endpoint
+      setOrganizations(response.data);
+    } catch (error) {
+      console.error('Error fetching organizations:', error);
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      const response = await get('api/Projects'); // Adjust the API endpoint
+      setProjects(response.data);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+    fetchRoles();
+    fetchOrganizations();
+    fetchProjects();
+  }, []);
+
+  const columns = [
+    {
+      title: 'Фамилия',
+      dataIndex: 'lastName',
+      key: 'lastName',
+    },
+    {
+      title: 'Имя',
+      dataIndex: 'firstName',
+      key: 'firstName',
+    },
+    {
+      title: 'Отчество',
+      dataIndex: 'middleName',
+      key: 'middleName',
+    },
+    {
+      title: 'Контактный номер',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
+    },
+    {
+      title: 'Роль',
+      dataIndex: 'role',
+      key: 'role',
+      render: (role:any) => <span>{role.name}</span>, // Assuming role object has a 'name' property
+    },
+    {
+      title: 'Логин (email)',
+      dataIndex: 'email',
+      key: 'email',
+    },
+  ];
+  
+
+  const handleUserSubmit = async (values:any) => {
+    // Handle user form submission and API requests
   };
 
   return (
     <Layout>
-    
       <Card>
-        <Title>Управление</Title>
+        <Title level={2}>Пользователи</Title>
+        <Form>
+          {/* User form fields */}
+          {/* Role select */}
+          {/* Organization select */}
+          {/* Project select */}
+          <Button type="primary" htmlType="submit">
+            Создать пользователя
+          </Button>
+        </Form>
       </Card>
       <Card>
-        <Title level={2}>Создание организации и роли</Title>
-        <Button onClick={showOrganizationModal}>Создать организацию</Button>
-        <Button onClick={showRoleModal}>Создать роль</Button>
+        <Table columns={columns} dataSource={users} pagination={{ pageSize: 10 }} />
       </Card>
-      <Modal
-        title="Создание организации"
-        visible={organizationModalVisible}
-        onOk={hideOrganizationModal}
-        onCancel={hideOrganizationModal}
-      >
-        {/* Форма для создания организации */}
-      </Modal>
-      <Modal
-        title="Создание роли"
-        visible={roleModalVisible}
-        onOk={hideRoleModal}
-        onCancel={hideRoleModal}
-      >
-        {/* Форма для создания роли */}
-      </Modal>
-      <Pagination total={500} itemRender={itemRender} />
     </Layout>
   );
 };
