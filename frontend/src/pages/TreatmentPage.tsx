@@ -91,10 +91,7 @@ const TreatmentPage = () => {
   const [editingIndex, setEditingIndex] = useState(-1); // Initialize with -1 when not editing
   const [treatments, setTreatments] = useState([
     {
-      title: '',
-      description: '',
-      region: '',
-      contacts: '',
+
       email: '',
       id: '',
       createdDate: '',
@@ -114,6 +111,7 @@ const TreatmentPage = () => {
   const [filteredAndSortedTreatments, setFilteredAndSortedTreatments] = useState(treatments);
 
 const handlePost = async (values: {
+
   id: string;
     createdDate: string;
     name: string;
@@ -147,23 +145,19 @@ const handlePost = async (values: {
     setEditingIndex(-1); // Reset editing index
   } else {
     const newTreatment = {
-      title: '',
-      description: '',
-      region: '',
-      contacts: '',
-      email: '',
-      id: '',
-      createdDate: '',
-      name: '',
-      bin: '',
-      address: '',
-      headFirstName: '',
-      headLastName: '',
-      headMiddleName: '',
-      phoneNumber: '',
-      city: '',
-      projectId: '',
-      projects: [''], // Make sure projects is an array of strings
+      email: values.email,
+      id: values.id,
+      createdDate: values.createdDate,
+      name: values.name,
+      bin: values.bin,
+      address: values.address,
+      headFirstName: values.headFirstName,
+      headLastName: values.headLastName,
+      headMiddleName: values.headMiddleName,
+      phoneNumber: values.phoneNumber,
+      city: values.city,
+      projectId: values.projectId,
+      projects: values.projects,
     };
     try {
       const response = await post('api/Organization', newTreatment);
@@ -179,11 +173,11 @@ const handlePost = async (values: {
   hideModal();
 };
 
-  const handleFilterByRegion = (selectedRegion:string) => {
-    const filteredTreatments = treatments.filter(treatment => treatment.region === selectedRegion);
-    const sortedTreatments = filteredTreatments.sort((a, b) => a.title.localeCompare(b.title));
-    setFilteredAndSortedTreatments(sortedTreatments);
-  };
+  // const handleFilterByRegion = (selectedRegion:string) => {
+  //   const filteredTreatments = treatments.filter(treatment => treatment.region === selectedRegion);
+  //   const sortedTreatments = filteredTreatments.sort((a, b) => a.title.localeCompare(b.title));
+  //   setFilteredAndSortedTreatments(sortedTreatments);
+  // };
 
   const handleEdit = (index: number) => {
     setEditingIndex(index);
@@ -194,6 +188,7 @@ const handlePost = async (values: {
   };
 
   const hideModal = () => {
+    
     setOpen(false);
   };  
   const itemRender: PaginationProps['itemRender'] = (_, type, originalElement) => {
@@ -212,11 +207,7 @@ const handlePost = async (values: {
     return treatmentsToDisplay.map((treatment, index) => (
       <Col xs={24} sm={24} md={16} lg={12} xl={8} key={index}>
         <Card title={`Обращение ${index}`}>
-          <p>Название: {treatment.title}</p>
-          <p>Описание: {treatment.description}</p>
-          <p>Контакты: {treatment.contacts}</p>
-          <p>Email: {treatment.email}</p>
-          <p>Регион: {treatment.region}</p>
+      
   
           {/* New fields */}
           <p>БИН: {treatment.bin}</p>
@@ -230,7 +221,7 @@ const handlePost = async (values: {
           <p>Проекты: {treatment.projects.join(', ')}</p>
           
           <Button onClick={() => handleEdit(index)}>Edit</Button>
-          <Button onClick={() => handleFilterByRegion(selectedRegion)}>Filter by Region</Button>
+          {/* <Button onClick={() => handleFilterByRegion(selectedRegion)}>Filter by Region</Button> */}
         </Card>
       </Col>
     ));
