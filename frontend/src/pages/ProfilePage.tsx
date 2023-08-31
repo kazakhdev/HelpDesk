@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { BackButton } from "../components/BackButton";
 import { getUser } from "../services/authService";
 import { IUser } from "../common/IUser";
-
+import type { PaginationProps } from 'antd';
+import { Pagination } from 'antd';
 const { Title, Text } = Typography;
 
 const ProfilePage = () => {
@@ -13,10 +14,19 @@ const ProfilePage = () => {
   useEffect(()=>{
       const fetchUserDate = async()=>{
           const res =await getUser();
-          setUser(res)
+          // setUser(res)
       }
       fetchUserDate();
   },[])
+  const itemRender: PaginationProps['itemRender'] = (_, type, originalElement) => {
+    if (type === 'prev') {
+      return <a>Previous</a>;
+    }
+    if (type === 'next') {
+      return <a>Next</a>;
+    }
+    return originalElement;
+  };
 
   return (
     <Layout>
@@ -48,6 +58,7 @@ const ProfilePage = () => {
           </Col>
         </Row>
       </Card>
+      <Pagination total={500} itemRender={itemRender} />
     </Layout>
   );
 };

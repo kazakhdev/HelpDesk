@@ -1,5 +1,6 @@
-import { UploadOutlined, FileDoneOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { UploadOutlined, FileDoneOutlined, LogoutOutlined, UserOutlined, GlobalOutlined } from '@ant-design/icons';
 import { logOut } from '../services/authService';
+import { Empty } from 'antd';
 
 export interface MenuItem {
   key: string;
@@ -7,16 +8,22 @@ export interface MenuItem {
   label: React.ReactNode;
   link: string;
   role?: string;
-  // onClick?: ()=>void;
+  onClick?: () => void;
   children?: MenuItem[];
 }
 
-export const menuItems:MenuItem[] = [
+export const menuItems: MenuItem[] = [
   {
     key: "1",
     icon: <UploadOutlined />,
     label: "Админ",
     link: "/Main"
+  },
+  {
+    key:"7",
+    icon:<UserOutlined/>,
+    label: "Создать Обращение",
+    link: "/CreateTreatment"
   },
   {
     key: "2",
@@ -25,19 +32,30 @@ export const menuItems:MenuItem[] = [
     link: "/Treatment"
   },
   {
-    key:"3",
-    icon:<UserOutlined/>,
+    key: "3",
+    icon: <UserOutlined />,
     label: "Профиль",
     link: "/Profile"
-  },
+  },  
   {
     key: "4",
-    icon: <LogoutOutlined/>,
+    icon: <GlobalOutlined />,
+    label: "Администрирование",
+    link: "/Administration"
+  },
+  {
+    key:"5",
+    icon:<Empty/>,
+    label: "Организация",
+    link: "/Organization"
+  },
+  {
+    key: "6",
+    icon: <Empty/>,
     label: "Выход",
     link: "/",
-    // onClick: ()=> {
-    //   logOut()
-    // }
+    onClick: () => {
+      console.log("Miras"); // Change this line
+    }
   }
 ];
-
