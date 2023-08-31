@@ -5,26 +5,25 @@ import { axiosInstance } from "./authHeader";
 const API_URL ="https://localhost:7001";
 export const login = async (login: string, password: string) => {
     const body = { login, password };
-    try {
-      const response = await axios.post(API_URL + '/api/Account', body);
-      if (response.data.code==="SUCCESS") {
-        const userData = {
-          isSuccessed: response.data.isSuccessed,
-          code: response.data.code,
-          title: response.data.title,
-          text: response.data.text,
-          data: {
-            token: response.data.data.token,
-          },
-          exception: response.data.exception,
-        };
-        localStorage.setItem("user", JSON.stringify(userData));
-      }
-    } catch (error) {
-      console.log("ERROR: ", error);
-      throw error;
-    }
-  };
+    
+       return await axios.post(API_URL + '/api/Account', body).then((response)=>{
+        if (response.data.code==="SUCCESS") {
+          const userData = {
+            isSuccessed: response.data.isSuccessed,
+            code: response.data.code,
+            title: response.data.title,
+            text: response.data.text,
+            data: {
+              token: response.data.data.token,
+            },
+            exception: response.data.exception,
+          };
+          localStorage.setItem("user", JSON.stringify(userData));
+          return response.data.isSuccessed;
+        }
+       });
+      
+    } 
 export const logOut=()=>{
     localStorage.clear()
     
