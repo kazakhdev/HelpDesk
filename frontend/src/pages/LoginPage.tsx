@@ -28,42 +28,27 @@ const LoginPage = ()=>{
         console.log('Failed:', errorInfo);
       };
 
-    const handleLogin =async (formValue: {email:string, password:string})=>{
+    const handleLogin =(formValue: {email:string, password:string})=>{
         const {email, password} = formValue;
-        const isAuth =await login(email,password);
-        console.log("auth:",isAuth)
-        if (isAuth){
+        login(email,password).then((res)=>{
           getUser();
           navigate("Main")
-        }
-        else{
-          setErrorMessage("Неверный логин или пароль")
-        }
-        // login(email,password).then((res)=>{
-        //   if (res.data.code==="SUCCESS"){
-        //     getUser();
-
-        //   navigate("Main")
-        //   }
-        //   else{
-        //     setErrorMessage("Неверный логин или пароль")
-        //   }
-        // }).catch((error)=>{
-        //   const resMessage =
-        //     (
-        //         error.response &&
-        //         error.response.data &&
-        //         error.response.data.message) || 
-        //         error.message || error.toString();
+        }).catch((error)=>{
+          const resMessage =
+            (
+                error.response &&
+                error.response.data &&
+                error.response.data.message) || 
+                error.message || error.toString();
                 
-        //         if (error.response && error.response.status ===400){
-        //           setErrorMessage("Неверный логин или пароль")
-        //         }
-        //         else{
-        //           setErrorMessage(resMessage)
-        //         }
+                if (error.response && error.response.status ===400){
+                  setErrorMessage("Неверный логин или пароль")
+                }
+                else{
+                  setErrorMessage(resMessage)
+                }
 
-        // })
+        })
         
     }
     return(

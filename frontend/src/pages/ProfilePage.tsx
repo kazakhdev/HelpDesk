@@ -1,27 +1,33 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Card, Row, Col, Typography, Space, Button } from "antd";
+import { Avatar, Card, Row, Col, Typography, Space } from "antd";
 import Layout from "antd/es/layout/layout";
 import { useEffect, useState } from "react";
 import { BackButton } from "../components/BackButton";
-import { getCurrentUser, getUser } from "../services/authService";
+import { getUser } from "../services/authService";
 import { IUser } from "../common/IUser";
-import { createOrganization } from "../services/organizationService";
-
+import type { PaginationProps } from 'antd';
+import { Pagination } from 'antd';
 const { Title, Text } = Typography;
 
 const ProfilePage = () => {
   const [user,setUser] =useState<IUser>()
   useEffect(()=>{
       const fetchUserDate = async()=>{
-          const res =await getCurrentUser();
-          setUser(res)
+          const res =await getUser();
+          // setUser(res)
       }
       fetchUserDate();
   },[])
+  const itemRender: PaginationProps['itemRender'] = (_, type, originalElement) => {
+    if (type === 'prev') {
+      return <a>Previous</a>;
+    }
+    if (type === 'next') {
+      return <a>Next</a>;
+    }
+    return originalElement;
+  };
 
-  const handleCreate =()=>{
-    createOrganization("1","Miras","3232423232","Sauran 14","First","Bank","Middle","87055179009","mrametist","Astana","2",["Miras", "Dias"])
-  }
   return (
     <Layout>
         <Title level={2}>Профиль</Title>
@@ -52,7 +58,7 @@ const ProfilePage = () => {
           </Col>
         </Row>
       </Card>
-      <Button onClick={handleCreate}>Создать организацию</Button>
+      <Pagination total={500} itemRender={itemRender} />
     </Layout>
   );
 };
