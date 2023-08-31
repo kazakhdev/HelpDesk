@@ -26,6 +26,7 @@ const kazakhstanCities = [
   { value: "Рудный", label: "Рудный" },
   { value: "Семей", label: "Семей" },
   { value: "Жезказган", label: "Жезказган" },
+  { value: "Жанарка", label: "Жанарка" },
 ];
 const columns =[
   {
