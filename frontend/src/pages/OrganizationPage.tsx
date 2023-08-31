@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Card, Button, Typography, Modal, Form, Divider, Row, Col, Table, Input, Select, Space } from 'antd';
-import { postOrganization, putOrganization } from '../services/organizationFormService';
+import { getAllOrganizations, postOrganization, putOrganization } from '../services/organizationFormService';
+import { IOrganization } from '../common/IOrganization';
 
 const { Title } = Typography;
 const kazakhstanCities = [
@@ -66,9 +67,17 @@ const columns =[
 const OrganizationPage = () => {
   const [organizationModalVisible, setOrganizationModalVisible] = useState(false);
   const [roleModalVisible, setRoleModalVisible] = useState(false);
+  const [organizations, setOrganizationss] =useState<IOrganization[]>()
 const onFinish =(values:any)=>{
 handleCreateOrganization(values)
 }
+useEffect(()=>{
+  const fetchOrganizations =async()=>{
+    const res = await getAllOrganizations();
+    setOrganizationss(res)
+  }
+  fetchOrganizations();
+},[])
 const handleCreateOrganization =async(formValue: {name:string,bin:string,address: string, headFirstName: string, headLastName: string, headMiddleName: string, phoneNumber: string, email: string, city: string, projects:string})=>{
   const {name,bin,address, headFirstName, headLastName, headMiddleName, phoneNumber, email, city,projects} =formValue;
   const id = await postOrganization();
@@ -80,7 +89,8 @@ const handleCreateOrganization =async(formValue: {name:string,bin:string,address
   } else {
     console.error('Error: id is not a valid string.');
   }
-
+  const result = await getAllOrganizations();
+  setOrganizationss(result);
 }
 const onFinishFailed=()=>{
   console.log("error")
@@ -176,7 +186,7 @@ const onFinishFailed=()=>{
       <Card>
         <Title level={2}>Список Организаций</Title>
         <Space/>
-        <Table columns={columns}></Table>
+        <Table columns={columns} dataSource={organizations}></Table>
       </Card>
     </Layout>
   );

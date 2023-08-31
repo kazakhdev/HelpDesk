@@ -43,3 +43,14 @@ export const putOrganization =async(name:string,bin:string,address: string, head
         console.log("FAILED in put request:",error)
     }
 }
+
+export const getAllOrganizations =async()=>{
+    return await axiosInstance.get(`/api/Organization`).then((res)=>{
+        if (res.data.code==="SUCCESS"){
+            return res.data.data.data;
+        }
+        return null
+    }).catch((err)=>{
+        console.log("Error: ",err)
+    })
+}
