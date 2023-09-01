@@ -45,6 +45,25 @@ export const putOrganization =async(name:string,bin:string,address: string, head
     }
 }
 
+export const getCurrentOrganization=async(organizationID:string)=>{
+
+    return   await axiosInstance.get(`/api/Organization/${organizationID}`).then((res)=>{
+        if (res.data.code==="SUCCESS"){
+           return res.data.data.data
+        }
+        return null
+    }).catch((err)=>{
+        console.log("error:",err)
+    })
+}
+
+//Надо решить проблему
+export const deleteOrganization =async(organizationId:string)=>{
+    const body = {id:organizationId};
+    await axiosInstance.delete(`/api/Organization`).then((res)=>{
+
+    })
+}
 export const getAllOrganizations =async()=>{
     return await axiosInstance.get(`/api/Organization`).then((res)=>{
         if (res.data.code==="SUCCESS"){
