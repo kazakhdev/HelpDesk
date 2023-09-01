@@ -45,17 +45,21 @@ export const menuItems: MenuItem[] = [
   },
   {
     key:"5",
-    icon:<Empty/>,
+    icon:"",
     label: "Организация",
     link: "/Organization"
   },
   {
-    key: "6",
-    icon: <Empty/>,
+    key:"6",
+    icon:"",
+    label: "Проекты",
+    link: "/Projects"
+  },
+  
+  {
+    key: "7",
+    icon: "",
     label: "Выход",
     link: "/",
-    onClick: () => {
-      console.log("Miras"); // Change this line
-    }
   }
 ];
