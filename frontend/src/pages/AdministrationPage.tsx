@@ -131,13 +131,13 @@ const AdministrationPage = () => {
   const fetchUsers = async () => {
     try {
       const usersData = await getUsers();
-      console.log(usersData)
-      // if (usersData) {
-      //   setUsers(usersData);
+      console.log("DATA:",usersData)
+      if (usersData) {
+        setUsers(usersData);
         
-      // } else {
-      //   message.error('Failed to fetch users.');
-      // }
+      } else {
+        message.error('Failed to fetch users.');
+      }
     } catch (error) {
       console.error('Error fetching users:', error);
       message.error('Failed to fetch users. '+error,);

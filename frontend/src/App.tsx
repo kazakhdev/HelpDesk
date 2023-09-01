@@ -15,6 +15,7 @@ import { Page } from './pages/Page';
 import { PasswordRecoveryPage } from './pages/PasswordRecoveryPage';
 import OrganizationPage from './pages/OrganizationPage';
 import { TreatmentsList } from './pages/TreatmentsList';
+import { ProjectPage } from './pages/ProjectPage';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
       <Route path='/Organization' element={<MainContent><OrganizationPage/></MainContent>}/>
       <Route path='/Profile' element={<MainContent><ProfilePage/></MainContent>}/>
       <Route path='/Administration' element={<MainContent><AdministrationPage/></MainContent>}/>
+      <Route path='/Projects' element={<MainContent><ProjectPage/></MainContent>}/>
       <Route path='/unauthorized' element={<Page/>}/>
       </Route>
     </Routes>

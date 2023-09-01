@@ -12,21 +12,21 @@ export const getAllRoles =async()=>{
     })
 }
 export const getUsers =async()=>{
-    return await axiosInstance.get(`/api/User`).then((res)=>{
-        if (res.data.code==="SUCCESS"){
-            return res.data.data.data
-        }
-        return null;
-    }).catch((err)=>{
-        console.log("FAILED: ",err)
-    })
+    try{
+        return await axiosInstance.get(`/api/User`).then((res)=>{
+                return res.data.data
+        }).catch((err)=>{
+            console.log("FAILED: ",err)
+        })
+    }
+    catch(err){
+
+    }
+    
 }
 export const getCustomUser =async(userId:string)=>{
     return await axiosInstance.get(`/api/User/${userId}`).then((res)=>{
-        if (res.data.code==="SUCCESS"){
             return res.data.data.data
-        }
-        return null
     }).catch((err)=>{
         console.log("FAILED:",err)
     })
@@ -54,11 +54,11 @@ export const createUser = async (
         organizationId,
       });
   
-      if (response.data.code === "SUCCESS") {
+      
         return response.data.data.id;
-      }
+      
   
-      return null;
+      
     } catch (error) {
       console.error('Error creating user:', error);
       return null;
@@ -66,9 +66,9 @@ export const createUser = async (
   };
 export const putUser=async()=>{
     await axiosInstance.put("/api/User").then((res)=>{
-        if (res.data.code==="SUCCESS"){
+        
             console.log("PUT REQUEST:",res.data.code)
-        }
+        
     }).catch((err)=>{
         console.log("ERROR IN PUT REQUEST: ",err)
     })
