@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Card, Table, Form, Input, Select, Button, Typography } from 'antd';
 import { get, post, put, del } from '../services/api';
+import { getAllUsers } from '../services/authService';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -13,8 +14,8 @@ const AdministrationPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await get('api/Users'); // Adjust the API endpoint
-      setUsers(response.data);
+      const response = await getAllUsers(); // Adjust the API endpoint
+      setUsers(response);
     } catch (error) {
       console.error('Error fetching users:', error);
     }
