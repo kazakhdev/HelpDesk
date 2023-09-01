@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { Layout, Card, Table, Form, Input, Select, Button, Typography, message } from 'antd';
-
+import { getAllRoles, getUsers, createUser } from '../services/userService'; // Import your userService functions
 const { Title } = Typography;
 const { Option } = Select;
 
@@ -12,6 +12,8 @@ const AdministrationPage = () => {
     phoneNumber: string;
     role: string;
     email: string;
+    password :string;
+    organizationId: string;
   }[]>([]);
   const [roles, setRoles] = useState([]);
   const [organizations, setOrganizations] = useState([]);
@@ -23,6 +25,8 @@ const AdministrationPage = () => {
     phoneNumber: string;
     role: string;
     email: string;
+    password :string;
+    organizationId:string;
   }>({
     lastName: '',
     firstName: '',
@@ -30,8 +34,41 @@ const AdministrationPage = () => {
     phoneNumber: '',
     role: '',
     email: '',
+    password : '',
+    organizationId : ''
   });
+  const fetchUsers = async () => {
+    try {
+      const usersData = await getUsers();
+      if (usersData) {
+        setUsers(usersData);
+      } else {
+        message.error('Failed to fetch users.');
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      message.error('Failed to fetch users.');
+    }
+  };
+  const fetchRoles = async () => {
+    try {
+      const rolesData = await getAllRoles();
+      if (rolesData) {
+        setRoles(rolesData);
+      } else {
+        message.error('Failed to fetch roles.');
+      }
+    } catch (error) {
+      console.error('Error fetching roles:', error);
+      message.error('Failed to fetch roles.');
+    }
+  };
 
+  useEffect(() => {
+    fetchUsers();
+    fetchRoles();
+    // ... fetch other data
+  }, []);
   const columns = [
     {
       title: 'Фамилия',
@@ -65,9 +102,42 @@ const AdministrationPage = () => {
     },
   ];;
 
-  const handleCreateUser = () => {
- 
-    setUsers([...users, formData]);
+  const handleCreateUser = async () => {
+    try {
+      const userId = await createUser(
+        formData.lastName,
+        formData.firstName,
+        formData.middleName,
+        formData.role,
+        formData.phoneNumber,
+        formData.email,
+        formData.password,
+        formData.organizationId
+      );
+  
+      if (userId) {
+        const newUser = {
+          lastName: formData.lastName,
+          firstName: formData.firstName,
+          middleName: formData.middleName,
+          phoneNumber: formData.phoneNumber,
+          role: formData.role,
+          email: formData.email,
+          password: formData.password,
+          organizationId: formData.organizationId,
+          id: userId, // Add the 'id' property here
+        };
+  
+        setUsers([...users, newUser]);
+        resetForm();
+        message.success('User created successfully.');
+      } else {
+        message.error('Failed to create user.');
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+      message.error('Failed to create user.');
+    }
   };
 
   const handleRoleChange = (value:any) => {
@@ -82,6 +152,8 @@ const AdministrationPage = () => {
       phoneNumber: '',
       role: '',
       email: '',
+      password : '',
+      organizationId : ''
     });
   }
 
