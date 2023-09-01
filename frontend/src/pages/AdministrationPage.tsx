@@ -14,6 +14,9 @@ const AdministrationPage = () => {
     email: string;
     password :string;
     organizationId: string;
+    organization:string,
+    projects:string[],
+    id:string,
   }[]>([]);
   const [roles, setRoles] = useState([]);
   const [organizations, setOrganizations] = useState([]);
@@ -37,38 +40,7 @@ const AdministrationPage = () => {
     password : '',
     organizationId : ''
   });
-  const fetchUsers = async () => {
-    try {
-      const usersData = await getUsers();
-      if (usersData) {
-        setUsers(usersData);
-      } else {
-        message.error('Failed to fetch users.');
-      }
-    } catch (error) {
-      console.error('Error fetching users:', error);
-      message.error('Failed to fetch users.');
-    }
-  };
-  const fetchRoles = async () => {
-    try {
-      const rolesData = await getAllRoles();
-      if (rolesData) {
-        setRoles(rolesData);
-      } else {
-        message.error('Failed to fetch roles.');
-      }
-    } catch (error) {
-      console.error('Error fetching roles:', error);
-      message.error('Failed to fetch roles.');
-    }
-  };
 
-  useEffect(() => {
-    fetchUsers();
-    fetchRoles();
-    // ... fetch other data
-  }, []);
   const columns = [
     {
       title: 'Фамилия',
@@ -125,10 +97,10 @@ const AdministrationPage = () => {
           email: formData.email,
           password: formData.password,
           organizationId: formData.organizationId,
-          id: userId, // Add the 'id' property here
+          id: userId, 
         };
   
-        setUsers([...users, newUser]);
+        // setUsers([...users, newUser]);
         resetForm();
         message.success('User created successfully.');
       } else {
@@ -156,7 +128,40 @@ const AdministrationPage = () => {
       organizationId : ''
     });
   }
+  const fetchUsers = async () => {
+    try {
+      const usersData = await getUsers();
+      console.log(usersData)
+      // if (usersData) {
+      //   setUsers(usersData);
+        
+      // } else {
+      //   message.error('Failed to fetch users.');
+      // }
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      message.error('Failed to fetch users. '+error,);
+    }
+  };
+  const fetchRoles = async () => {
+    try {
+      const rolesData = await getAllRoles();
+      if (rolesData) {
+        setRoles(rolesData);
+      } else {
+        message.error('Failed to fetch roles.');
+      }
+    } catch (error) {
+      console.error('Error fetching roles:', error);
+      message.error('Failed to fetch roles.');
+    }
+  };
 
+  useEffect(() => {
+    fetchUsers();
+    fetchRoles();
+  
+  }, []);
   return (
     <Layout>
       <Card>
