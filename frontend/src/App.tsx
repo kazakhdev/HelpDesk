@@ -9,7 +9,6 @@ import { MainPage } from './pages/MainPage';
 import { MainContent } from './components/MainContent';
 import AdministrationPage from './pages/AdministrationPage'
 import SelectedRegionProvider from './components/SelectedRegionProvider';
-// import { getUser } from './services/authService';
 import { ProfilePage } from './pages/ProfilePage';
 import { ProtectedRoute } from './Route/ProtectedRouter';
 import { Page } from './pages/Page';

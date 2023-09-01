@@ -3,9 +3,6 @@ import { Layout, Card, Button, Typography, Modal, Form, Divider, Row, Col, Table
 import { IOrganization } from '../common/IOrganizations';
 import { getAllOrganizations, postOrganization, putOrganization } from '../services/organizationService';
 
-import { getAllOrganizations, postOrganization, putOrganization } from '../services/organizationService';
-import { IOrganization } from '../common/IOrganizations';
-
 
 const { Title } = Typography;
 const kazakhstanCities = [

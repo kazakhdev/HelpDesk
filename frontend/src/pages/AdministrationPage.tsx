@@ -1,59 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Card, Table, Form, Input, Select, Button, Typography } from 'antd';
-import { get, post, put, del } from '../services/api';
-import { getAllUsers } from '../services/authService';
+import React, { useState } from 'react';
+import { Layout, Card, Table, Form, Input, Select, Button, Typography, message } from 'antd';
 
 const { Title } = Typography;
 const { Option } = Select;
 
 const AdministrationPage = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<{
+    lastName: string;
+    firstName: string;
+    middleName: string;
+    phoneNumber: string;
+    role: string;
+    email: string;
+  }[]>([]);
   const [roles, setRoles] = useState([]);
   const [organizations, setOrganizations] = useState([]);
   const [projects, setProjects] = useState([]);
-
-  const fetchUsers = async () => {
-    try {
-      const response = await getAllUsers(); // Adjust the API endpoint
-      setUsers(response);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  };
-
-  const fetchRoles = async () => {
-    try {
-      const response = await get('api/Roles'); // Adjust the API endpoint
-      setRoles(response.data);
-    } catch (error) {
-      console.error('Error fetching roles:', error);
-    }
-  };
-
-  const fetchOrganizations = async () => {
-    try {
-      const response = await get('api/Organizations'); // Adjust the API endpoint
-      setOrganizations(response.data);
-    } catch (error) {
-      console.error('Error fetching organizations:', error);
-    }
-  };
-
-  const fetchProjects = async () => {
-    try {
-      const response = await get('api/Projects'); // Adjust the API endpoint
-      setProjects(response.data);
-    } catch (error) {
-      console.error('Error fetching projects:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUsers();
-    fetchRoles();
-    fetchOrganizations();
-    fetchProjects();
-  }, []);
+  const [formData, setFormData] = useState<{
+    lastName: string;
+    firstName: string;
+    middleName: string;
+    phoneNumber: string;
+    role: string;
+    email: string;
+  }>({
+    lastName: '',
+    firstName: '',
+    middleName: '',
+    phoneNumber: '',
+    role: '',
+    email: '',
+  });
 
   const columns = [
     {
@@ -79,40 +56,93 @@ const AdministrationPage = () => {
     {
       title: 'Роль',
       dataIndex: 'role',
-      key: 'role',
-      render: (role:any) => <span>{role.name}</span>, // Assuming role object has a 'name' property
+      key: 'role'
     },
     {
       title: 'Логин (email)',
       dataIndex: 'email',
       key: 'email',
     },
-  ];
-  
+  ];;
 
-  const handleUserSubmit = async (values:any) => {
-    // Handle user form submission and API requests
+  const handleCreateUser = () => {
+ 
+    setUsers([...users, formData]);
   };
+
+  const handleRoleChange = (value:any) => {
+    setFormData({ ...formData, role: value });
+  };
+
+  function resetForm() {
+    setFormData({
+      lastName: '',
+      firstName: '',
+      middleName: '',
+      phoneNumber: '',
+      role: '',
+      email: '',
+    });
+  }
 
   return (
     <Layout>
       <Card>
         <Title level={2}>Пользователи</Title>
         <Form>
-          {/* User form fields */}
-          {/* Role select */}
-          {/* Organization select */}
-          {/* Project select */}
-          <Button type="primary" htmlType="submit">
-            Создать пользователя
-          </Button>
-        </Form>
-      </Card>
-      <Card>
-        <Table columns={columns} dataSource={users} pagination={{ pageSize: 10 }} />
-      </Card>
-    </Layout>
-  );
+          <Form.Item label="Фамилия">
+            <Input
+              value={formData.lastName}
+              onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+            />
+          </Form.Item>
+    <Form.Item label="Имя">
+  <Input
+    value={formData.firstName}
+    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+  />
+</Form.Item>
+<Form.Item label="Отчество">
+  <Input
+    value={formData.middleName}
+    onChange={(e) => setFormData({ ...formData, middleName: e.target.value })}
+  />
+</Form.Item>
+<Form.Item label="Контактный номер">
+  <Input
+    value={formData.phoneNumber}
+    onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+  />
+</Form.Item>
+<Form.Item label="Роль">
+  <Select
+    value={formData.role}
+    onChange={(value) => handleRoleChange(value)}
+  >
+    {roles.map((role) => (
+      <Option key={role} value={role}>
+        {role}
+      </Option>
+    ))}
+  </Select>
+</Form.Item>
+<Form.Item label="Логин (email)">
+  <Input
+    value={formData.email}
+    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+  />
+</Form.Item>
+
+<Button type="primary" htmlType="button" onClick={handleCreateUser}>
+  Создать пользователя
+</Button>
+</Form>
+</Card>
+<Card>
+<Table columns={columns} dataSource={users} pagination={{ pageSize: 10 }} />
+</Card>
+</Layout>
+);
 };
 
 export default AdministrationPage;
