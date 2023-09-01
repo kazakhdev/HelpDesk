@@ -31,6 +31,7 @@ export const putOrganization =async(name:string,bin:string,address: string, head
         city:city,
         projectId:id,
         projects:projects}
+        console.log("project:", projectId)
     try{
         console.log("BODY:",body)
         await axiosInstance.put(`/api/Organization`,body).then((res)=>{

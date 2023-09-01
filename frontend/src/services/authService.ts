@@ -36,6 +36,11 @@ export const register =async(email:string,firstName:string, secondName: string,m
         }
     })
 }
+export const getAllUsers=async()=>{
+  return await axiosInstance.get(`/api/User`).then((res)=>{
+    return res.data
+  })
+}
 // export const getUser = async() =>{
 //     const sessionData = localStorage.getItem("user"); // Use getItem here
 //   const token = sessionData ? JSON.parse(sessionData).data.token : null;

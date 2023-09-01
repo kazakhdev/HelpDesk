@@ -31,24 +31,39 @@ export const getCustomUser =async(userId:string)=>{
         console.log("FAILED:",err)
     })
 }
-export const createUser =async(lastName:string,firstName:string,middleName:string,roleId:string,phoneNumber:string,email:string, password:string, organizationID:string)=>{
-    const body = {
-        lastName:lastName,
-        firstName:firstName,
-        middleName:middleName,
-        roleId:roleId,
-        phoneNumber:phoneNumber,
-        email:email,
-        password:password,
-        organizationId: organizationID
+export const createUser = async (
+    lastName: string,
+    firstName: string,
+    middleName: string,
+    roleId: string,
+    phoneNumber: string,
+    email: string,
+    password: string,
+    organizationId: string
+  ): Promise<string | null> => {
+    try {
+      // Make the API call to create the user
+      const response = await axiosInstance.post("/api/User", {
+        lastName,
+        firstName,
+        middleName,
+        roleId,
+        phoneNumber,
+        email,
+        password,
+        organizationId,
+      });
+  
+      if (response.data.code === "SUCCESS") {
+        return response.data.data.id;
+      }
+  
+      return null;
+    } catch (error) {
+      console.error('Error creating user:', error);
+      return null;
     }
-    await axiosInstance.post("/api/User").then((res)=>{
-        if (res.data.code==="SUCCESS"){
-            return res.data.data.id
-        }
-        return null;
-    })
-}
+  };
 export const putUser=async()=>{
     await axiosInstance.put("/api/User").then((res)=>{
         if (res.data.code==="SUCCESS"){
