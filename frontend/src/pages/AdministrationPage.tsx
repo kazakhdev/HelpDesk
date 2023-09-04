@@ -3,7 +3,11 @@ import { Layout, Card, Table, Form, Input, Select, Button, Typography, message }
 import { getAllRoles, getUsers, createUser } from '../services/userService'; // Import your userService functions
 const { Title } = Typography;
 const { Option } = Select;
-
+interface IRole {
+  key:string,
+  label:string,
+  value:string,
+}
 const AdministrationPage = () => {
   const [users, setUsers] = useState<{
     lastName: string;
@@ -18,7 +22,7 @@ const AdministrationPage = () => {
     projects:string[],
     id:string,
   }[]>([]);
-  const [roles, setRoles] = useState([]);
+  const [roles, setRoles] = useState<IRole>();
   const [organizations, setOrganizations] = useState([]);
   const [projects, setProjects] = useState([]);
   const [formData, setFormData] = useState<{
@@ -156,6 +160,9 @@ const AdministrationPage = () => {
       message.error('Failed to fetch roles.');
     }
   };
+  const finish = async(formValue:{})=>{
+    const {} =formValue;
+  }
 
   useEffect(() => {
     fetchUsers();
@@ -166,7 +173,38 @@ const AdministrationPage = () => {
     <Layout>
       <Card>
         <Title level={2}>Пользователи</Title>
-        <Form>
+        <Form
+        onFinish={finish}
+        >
+          <Form.Item label="Имя">
+            <Input />
+          </Form.Item>
+
+          <Form.Item label="Фамилия">
+            <Input />
+          </Form.Item>
+          
+          <Form.Item label="Отчество">
+            <Input />
+          </Form.Item>
+
+          <Form.Item label="Роль">
+            <Select />
+          </Form.Item>
+
+          <Form.Item label="Логин (email)">
+            <Input />
+          </Form.Item>
+
+          <Form.Item label="Пароль">
+            <Input />
+          </Form.Item>
+
+
+        </Form>
+        
+        
+        {/* <Form>
           <Form.Item label="Фамилия">
             <Input
               value={formData.lastName}
@@ -213,7 +251,7 @@ const AdministrationPage = () => {
 <Button type="primary" htmlType="button" onClick={handleCreateUser}>
   Создать пользователя
 </Button>
-</Form>
+</Form> */}
 </Card>
 <Card>
 <Table columns={columns} dataSource={users} pagination={{ pageSize: 10 }} />

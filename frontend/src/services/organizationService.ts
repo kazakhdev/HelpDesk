@@ -16,7 +16,7 @@ export const postOrganization =async()=>{
 }
 export const putOrganization =async(name:string,bin:string,address: string, headFirstName: string, headLastName: string, headMiddleName: string, phoneNumber: string, email: string, city: string,projectId:string,projects:string) =>{
     const date =new Date();
-    const id="";
+    const id="3";
     const body={
         id:projectId,
         createdDate:date,
@@ -31,9 +31,7 @@ export const putOrganization =async(name:string,bin:string,address: string, head
         city:city,
         projectId:id,
         projects:projects}
-        console.log("project:", projectId)
     try{
-        console.log("BODY:",body)
         await axiosInstance.put(`/api/Organization`,body).then((res)=>{
         if (res){
             console.log("post success:",res)

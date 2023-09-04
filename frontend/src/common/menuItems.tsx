@@ -20,44 +20,44 @@ export const menuItems: MenuItem[] = [
     link: "/Main"
   },
   {
-    key:"7",
+    key:"2",
     icon:<UserOutlined/>,
     label: "Создать Обращение",
     link: "/CreateTreatment"
   },
   {
-    key: "2",
+    key: "3",
     icon: <FileDoneOutlined />,
     label: "Обращения",
     link: "/Treatment"
   },
   {
-    key: "3",
+    key: "4",
     icon: <UserOutlined />,
     label: "Профиль",
     link: "/Profile"
   },  
   {
-    key: "4",
+    key: "5",
     icon: <GlobalOutlined />,
     label: "Администрирование",
     link: "/Administration"
   },
   {
-    key:"5",
+    key:"6",
     icon:"",
     label: "Организация",
-    link: "/Organization"
+    link: "/Organizations"
   },
   {
-    key:"6",
+    key:"7",
     icon:"",
     label: "Проекты",
     link: "/Projects"
   },
   
   {
-    key: "7",
+    key: "8",
     icon: "",
     label: "Выход",
     link: "/",
