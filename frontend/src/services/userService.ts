@@ -3,10 +3,10 @@ import { axiosInstance } from "./authHeader"
 
 export const getAllRoles =async()=>{
     return await axiosInstance.get(`/api/User/roles`).then((res)=>{
-        if (res.data.code==="SUCCESS"){
+        
             return res.data.data
-        }
-        return null;
+        
+        
     }).catch((err)=>{
         console.log("ERROR:" , err)
     })

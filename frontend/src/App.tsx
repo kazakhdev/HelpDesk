@@ -13,9 +13,10 @@ import { ProfilePage } from './pages/ProfilePage';
 import { ProtectedRoute } from './Route/ProtectedRouter';
 import { Page } from './pages/Page';
 import { PasswordRecoveryPage } from './pages/PasswordRecoveryPage';
-import OrganizationPage from './pages/OrganizationPage';
 import { TreatmentsList } from './pages/TreatmentsList';
 import { ProjectPage } from './pages/ProjectPage';
+import OrganizationPageList from './pages/OrganizationPageList';
+import { OrganizationPage } from './pages/OrganizationPage';
 
 
 function App() {
@@ -37,7 +38,8 @@ function App() {
       <Route path='/SignUp' element={<SignUpPage/>}/>
       <Route path='/Main' element ={<MainContent><MainPage/></MainContent>}/>
       <Route path='/Treatment' element={<MainContent><TreatmentsList/></MainContent>}/>
-      <Route path='/Organization' element={<MainContent><OrganizationPage/></MainContent>}/>
+      <Route path='/Organizations' element={<MainContent><OrganizationPageList/></MainContent>}/>
+      <Route path='/Organization/:id' element={<MainContent><OrganizationPage/></MainContent>}/>
       <Route path='/Profile' element={<MainContent><ProfilePage/></MainContent>}/>
       <Route path='/Administration' element={<MainContent><AdministrationPage/></MainContent>}/>
       <Route path='/Projects' element={<MainContent><ProjectPage/></MainContent>}/>
